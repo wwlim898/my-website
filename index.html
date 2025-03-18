@@ -5,90 +5,141 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wei Wen | Technical Specialist</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fa;
             color: #333;
         }
 
         header {
-            background-color: #555;
+            background: linear-gradient(90deg, #4a90e2, #8e44ad);
             color: white;
-            padding: 20px;
+            padding: 40px 0;
             text-align: center;
-            font-size: 24px;
+            font-size: 2.5em;
+            letter-spacing: 1px;
         }
 
         nav {
+            background-color: #333;
             display: flex;
             justify-content: center;
-            background-color: #777;
+            padding: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         nav a {
             color: white;
-            padding: 14px 20px;
+            padding: 15px 20px;
             text-decoration: none;
             text-align: center;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
         }
 
         nav a:hover {
-            background-color: #999;
+            background-color: #555;
         }
 
         section {
-            padding: 10px;
-            max-width: 800px;
+            padding: 60px 20px;
+            max-width: 1000px;
             margin: auto;
-            margin-bottom: 60px; /* Add bottom margin to give space for the footer */
+            background-color: white;
+            margin-bottom: 60px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
-            color: #555;
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #666;
         }
 
         footer {
-            background-color: #555;
+            background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px;
-            width: 100%;
-            position: relative; /* Changed from fixed to relative */
-            bottom: 0;
+            padding: 20px;
+            position: relative;
         }
 
-        .contact-info a{
-            color: #333;
+        .contact-info a {
+            color: #4a90e2;
             text-decoration: none;
         }
 
-        /* Photo gallery styles */
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
         .photo-gallery {
             display: flex;
-            justify-content: center;
-            gap: 15px;
+            justify-content: space-between;
+            gap: 20px;
             flex-wrap: wrap;
-            margin-top: 0;
-            margin-bottom: 0px;
+            margin-top: 20px;
         }
 
         .photo-gallery img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            transition: transform 0.3s ease-in-out;
+            width: 32%;
+            height: auto;
             border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .photo-gallery img:hover {
-            transform: scale(1.5);
+            transform: scale(1.1);
         }
 
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
+        iframe {
+            border-radius: 8px;
+            border: none;
+            width: 100%;
+            height: 600px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            header {
+                font-size: 2em;
+                padding: 30px 0;
+            }
+
+            .photo-gallery img {
+                width: 48%;
+            }
+
+            footer {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-gallery img {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            iframe {
+                height: 500px;
+            }
         }
     </style>
 </head>
@@ -107,30 +158,30 @@
 <section id="about">
     <h2>About Me</h2>
     <p>
-        Hi, I am Wei Wen!. I majored in Accountancy but accidentally delved into the technology space. 
+        Hi, I am Wei Wen! I majored in Accountancy but accidentally delved into the technology space. 
         I began my career in Hong Kong with S&P Market Intelligence, building a robust background in data, learning about 
         data visualization, data analytics, datafeeds, and in recent times exploring Generative AI.
     </p>
 </section>
 
 <section id="photos">
+    <h2>Photo Gallery</h2>
     <div class="photo-gallery">
-        <img src="https://raw.githubusercontent.com/wwlim898/my-website/main/Family.jpeg" alt="Photo 1">
-        <img src="https://raw.githubusercontent.com/wwlim898/my-website/main/Me.jpeg" alt="Photo 2">
-        <img src="https://raw.githubusercontent.com/wwlim898/my-website/main/Son.jpeg" alt="Photo 3">
+        <img src="https://raw.githubusercontent.com/wwlim898/my-website/main/Family.jpeg" alt="Family Photo">
+        <img src="https://raw.githubusercontent.com/wwlim898/my-website/main/Me.jpeg" alt="Personal Photo">
+        <img src="https://raw.githubusercontent.com/wwlim898/my-website/main/Son.jpeg" alt="Son Photo">
     </div>
 </section>
 
 <section id="ask">
     <h2>Ask Me Any Question!</h2>
     <p>
-        Feel free to interact me in the chatbot below. You can ask questions such as:<br>
+        Feel free to interact with me in the chatbot below. You can ask questions such as:<br>
         <em>"Who is Wei Wen?"</em>, <em>"Where has he worked at?"</em>, <em>"What are his skillsets?"</em>, <em>"What are his hobbies?"</em> or <em>"What are some of his personal experiences?"</em>
     </p>
     <iframe
         src="https://www.chatbase.co/chatbot-iframe/Y0S4uKPnNyDoaZwZmHfLd"
-        width="100%"
-        style="height: 100%; min-height: 700px"
+        style="height: 700px;"
         frameborder="0"
     ></iframe>
 </section>
@@ -144,7 +195,7 @@
 </section>
 
 <footer>
-    © 2025 Wei Wen
+    © 2025 Wei Wen | All rights reserved.
 </footer>
 
 </body>
