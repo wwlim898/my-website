@@ -25,13 +25,63 @@
 
     header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
     .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#04121a}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#0b0f16;font-size:2rem;}
     nav{display:flex;gap:12px}
     .nav-link{color:var(--muted);text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600}
     .nav-link:hover{color:var(--accent);background:var(--glass)}
     .cta{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,rgba(57,192,255,0.14),rgba(125,242,255,0.06));border:1px solid rgba(125,242,255,0.08);cursor:pointer}
 
     footer{padding:18px 0;color:var(--muted);text-align:center;border-top:1px solid rgba(255,255,255,0.02)}
+
+    /* Portfolio Section Enhancements */
+    #portfolio-container {
+      display: flex; flex-wrap: wrap; gap: 20px; margin-top: 16px;
+    }
+    .project-tab {
+      border: 1px solid #23304a; border-radius: var(--radius); padding: 10px;
+      width: 210px; cursor: pointer; text-align: center; background: var(--card);
+      transition: box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    }
+    .project-tab:hover {
+      box-shadow: 0 2px 12px rgba(57,192,255,0.10);
+      background: var(--glass-2);
+      transform: translateY(-2px) scale(1.03);
+      border-color: var(--accent);
+    }
+    .project-tab img {
+      width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;
+      background: #202635;
+    }
+    .project-tab h4 { margin: 8px 0 4px; font-size: 1.1rem; }
+    .project-tab p { color: var(--muted); font-size: 0.96rem; }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.48);
+      overflow: auto;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      margin: 40px auto; background: var(--card);
+      color: #e6eef8;
+      padding: 25px 30px; border-radius: var(--radius); width: 92%; max-width: 480px; position: relative;
+      box-shadow: 0 6px 32px rgba(57,192,255,0.11);
+      animation: fadeIn 0.15s;
+    }
+    .close {
+      position: absolute; top: 10px; right: 22px; font-size: 28px; color: var(--muted); cursor: pointer;
+      transition: color 0.13s;
+    }
+    .close:hover { color: var(--accent); }
+    #modal-image { margin: 16px 0 10px 0; border-radius: 8px; width: 100%; background: #202635; }
+    #modal-title { margin-bottom: 2px; }
+    #modal-description { color: var(--muted); }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
 <body>
@@ -75,17 +125,18 @@
 
       <section id="portfolio">
         <h2>Portfolio</h2>
-        <div class="project">
-  <h3>Project Name</h3>
-  <p>Description of the project...</p>
-  <pre><code>
-    // Example code snippet for this project
-    function greet() {
-      alert('Hello, World!');
-    }
-  </code></pre>
-</div>
+        <div id="portfolio-container"></div>
       </section>
+
+      <!-- Modal Popup for Project Details -->
+      <div id="project-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <span class="close" id="close-modal">&times;</span>
+          <h3 id="modal-title"></h3>
+          <img id="modal-image" src="" alt="" style="max-width:100%;" />
+          <p id="modal-description"></p>
+        </div>
+      </div>
 
       <section id="contact">
         <h2>Contact Me</h2>
@@ -101,7 +152,57 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});} 
+    function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+
+    // === Portfolio Dynamic Section ===
+    const projects = [
+      {
+        title: "AI Dashboard Analytics",
+        description: "A real-time dashboard visualizing business KPIs using React, D3.js, and Python Flask backend.",
+        image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        title: "Automated Data Pipeline",
+        description: "ETL pipeline automating data cleaning, transformation, and loading into a cloud data warehouse.",
+        image: "https://images.unsplash.com/photo-1465101178521-c1a9136a3b41?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        title: "Chatbot for Customer Service",
+        description: "A GPT-powered chatbot for answering customer queries and automating support tickets.",
+        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+      }
+      // Add more projects here!
+    ];
+
+    // Render portfolio
+    const container = document.getElementById('portfolio-container');
+    projects.forEach((proj, idx) => {
+      const div = document.createElement('div');
+      div.className = 'project-tab';
+      div.innerHTML = `
+        <img src="${proj.image}" alt="${proj.title}">
+        <h4>${proj.title}</h4>
+        <p>${proj.description.substring(0,70)}${proj.description.length>70?'...':''}</p>
+      `;
+      div.onclick = () => openModal(idx);
+      container.appendChild(div);
+    });
+    // Modal logic
+    function openModal(idx) {
+      const proj = projects[idx];
+      document.getElementById('modal-title').innerText = proj.title;
+      document.getElementById('modal-description').innerText = proj.description;
+      document.getElementById('modal-image').src = proj.image;
+      document.getElementById('project-modal').style.display = 'flex';
+    }
+    document.getElementById('close-modal').onclick = function() {
+      document.getElementById('project-modal').style.display = 'none';
+    };
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('project-modal')) {
+        document.getElementById('project-modal').style.display = 'none';
+      }
+    };
   </script>
 </body>
 </html>
