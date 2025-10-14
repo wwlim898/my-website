@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wei Wen — AI & Data Consultant</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f16; --card:#0f1720; --muted:#98a0b3; --accent:#39c0ff; --accent-2:#7df2ff;
+      --glass: rgba(255,255,255,0.04); --glass-2: rgba(255,255,255,0.02);
+      --radius:14px; --maxw:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(57,192,255,0.04), transparent),
+                  linear-gradient(180deg, rgba(255,255,255,0.01), transparent 40%),
+                  var(--bg);
+      color:#e6eef8; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    .container{max-width:var(--maxw);margin:32px auto;padding:24px}
+
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#04121a}
+    nav{display:flex;gap:12px}
+    .nav-link{color:var(--muted);text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600}
+    .nav-link:hover{color:var(--accent);background:var(--glass)}
+    .cta{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,rgba(57,192,255,0.14),rgba(125,242,255,0.06));border:1px solid rgba(125,242,255,0.08);cursor:pointer}
+
+    footer{padding:18px 0;color:var(--muted);text-align:center;border-top:1px solid rgba(255,255,255,0.02)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo" id="logoTxt">WW</div>
+        <div>
+          <div style="font-weight:700">Wei Wen</div>
+          <div class="muted" style="font-size:13px">AI & Data Consultant</div>
+        </div>
+      </div>
+      <nav>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#ama">Ask Me Anything</a>
+        <a class="nav-link" href="#portfolio">Portfolio</a>
+        <a class="nav-link" href="#contact">Contact</a>
+        <button class="cta" onclick="scrollToSection('contact')">Let’s Chat</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="about">
+        <h1>About Me</h1>
+        <p class="muted">Welcome to my website. I'm an AI and Data Consultant specializing in building agentic workflows, automation systems, and data visualization dashboards for businesses.</p>
+      </section>
+
+      <section id="ama">
+        <h2>Ask Me Anything</h2>
+        <p class="muted">Have a question on AI, automation, or data visualization? Ask here and I’ll reply.</p>
+      </section>
+
+      <section id="portfolio">
+        <h2>Portfolio</h2>
+        <p class="muted">Projects & case studies. To add a project: edit <code>/projects.json</code>.</p>
+      </section>
+
+      <section id="contact">
+        <h2>Contact Me</h2>
+        <p class="muted">I’m available for consulting, advisory, or short projects.</p>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="year"></span> Wei Wen • Built with GitHub Pages
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});} 
+  </script>
+</body>
+</html>
