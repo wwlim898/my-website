@@ -20,7 +20,7 @@
 /* Portfolio Section Enhancements */
 #portfolio-container {
   display: flex; /* This is the key property */
-  gap: 300px; /* Space between the project tabs */
+  gap: 400px; /* Space between the project tabs */
   margin-top: 16px;
 }
 .project-tab {
@@ -28,5 +28,4 @@
   width: 100px; /* This sets a fixed width for each project */
   /* ... other styles ... */
 }
-
 
