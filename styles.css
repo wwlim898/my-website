@@ -20,7 +20,7 @@
 /* Portfolio Section Enhancements */
 #portfolio-container {
   display: flex; /* This is the key property */
-  gap: 500px; /* Space between the project tabs */
+  gap: 400px; /* Space between the project tabs */
   margin-top: 16px;
 }
 .project-tab {
@@ -29,4 +29,118 @@
   /* ... other styles ... */
 }
 
+/* Basic Reset and Body Styles */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 
+h2 {
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* 1. Horizontal Scroll Styles */
+.project-scroll-container {
+    display: flex; /* Makes the children align horizontally */
+    overflow-x: scroll; /* Enables horizontal scrolling */
+    padding: 20px;
+    gap: 30px; /* Space between tiles */
+    /* Optional: Hide the default scrollbar for a cleaner look */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+.project-scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+}
+
+/* Project Tiles */
+.project-tile {
+    flex: 0 0 300px; /* Prevents stretching, sets fixed width */
+    height: 300px;
+    background-color: #000000;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+.project-tile:hover {
+    transform: translateY(-5px); /* Lift tile on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.project-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.tile-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* 2. Modal (Pop-up) Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top of everything */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #000000;
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-view-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+#modal-view-button:hover {
+    background-color: #0056b3;
+}
