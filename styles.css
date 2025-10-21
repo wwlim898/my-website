@@ -3,7 +3,7 @@
   text-decoration: none;
 
   /* Set the text color */
-  color: #FFA500; /* Dark gray */
+  color: #FFA500; /* Light Orange */
 
   /* Set the font size and weight */
   font-size: 16px;
@@ -16,4 +16,5 @@
   /* Smooth transitions for hover effects (optional but recommended) */
   transition: color 0.3s ease, background-color 0.3s ease;
 }
+
 
