@@ -17,4 +17,15 @@
   transition: color 0.3s ease, background-color 0.3s ease;
 }
 
+/* Portfolio Section Enhancements */
+#portfolio-container {
+  display: flex; /* This is the key property */
+  gap: 400px; /* Space between the project tabs */
+  margin-top: 16px;
+}
+.project-tab {
+  /* ... other styles ... */
+  width: 100px; /* This sets a fixed width for each project */
+  /* ... other styles ... */
+}
 
