@@ -1,0 +1,19 @@
+.nav-link {
+  /* Remove the default underline for links */
+  text-decoration: none;
+
+  /* Set the text color */
+  color: #FFA500; /* Dark gray */
+
+  /* Set the font size and weight */
+  font-size: 16px;
+  font-weight: 500; /* Semi-regular weight */
+
+  /* Add some spacing around the links */
+  padding: 5px 10px;
+  margin-left: 15px; /* Space between links */
+
+  /* Smooth transitions for hover effects (optional but recommended) */
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
