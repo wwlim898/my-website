@@ -13,57 +13,24 @@
   <link rel="stylesheet" href="styles.css">
   <title>Bedtime Story Generator</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f7f8fc;
-      color: #333;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 700px;
-      margin: 2rem auto;
-      background: white;
-      border-radius: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      padding: 1.5rem;
-    }
-    h1 {
-      text-align: center;
-      color: #1e40af;
-    }
-    label {
-      display: block;
-      margin-top: 1rem;
-      font-weight: 500;
-    }
-    select, input[type=text], input[type=range], button {
-      width: 100%;
-      margin-top: 0.5rem;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-    button {
-      background-color: #2563eb;
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 1.2rem;
-    }
-    button:hover {
-      background-color: #1d4ed8;
-    }
-    .story-box {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      background: #f9fafb;
-      border-radius: 0.5rem;
-      min-height: 100px;
-      white-space: pre-wrap;
-    }
-  </style>
+  :root{
+    --bg:#0b0f16; --card:#0f1720; --muted:#98a0b3; --accent:#39c0ff; --accent-2:#7df2ff;
+    --glass: rgba(255,255,255,0.04); --glass-2: rgba(255,255,255,0.02);
+    --radius:14px; --maxw:1100px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(57,192,255,0.04), transparent),
+                linear-gradient(180deg, rgba(255,255,255,0.01), transparent 40%),
+                var(--bg);
+    color:#e6eef8; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+  .container{max-width:var(--maxw);margin:32px auto;padding:24px}
+  /* …other styles you want to reuse… */
+</style>
+
 </head>
 <body>
   <div class="container">
@@ -145,4 +112,5 @@
   </script>
 </body>
 </html>
+
 
