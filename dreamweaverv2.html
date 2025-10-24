@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Dream Weaver</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Custom Fonts: Fredoka (Body) and Chewy (Story/Title) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Chewy&display=swap');
+        .font-story { font-family: 'Chewy', cursive; }
+        .font-body { font-family: 'Fredoka', sans-serif; }
+        
+        /* New: Dark Blue Sky Background with Moon and Stars */
+        .bg-night-sky-gradient {
+            background: linear-gradient(135deg, #2a2a72 0%, #009ffd 100%); /* Deep blue to a lighter blue */
+        }
+
+        .moon-icon-style {
+            position: absolute;
+            top: 5%;
+            right: 8%;
+            width: 100px;
+            height: 100px;
+            color: #fffacd; /* Creamy yellow for moon */
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+            transform: rotate(-30deg);
+            z-index: 0;
+            opacity: 0.9;
+        }
+
+        .star-twinkle {
+            position: absolute;
+            width: 5px; height: 5px;
+            background-color: #fdfd96; /* Soft yellow for stars */
+            border-radius: 50%;
+            box-shadow: 0 0 8px #fdfd96, 0 0 15px rgba(255,255,0,0.5);
+            animation: twinkle 3s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.9; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.1); }
+        }
+
+        /* Custom Scrollbar for the output area */
+        .story-output-scrollable::-webkit-scrollbar {
+            width: 8px;
+        }
+        .story-output-scrollable::-webkit-scrollbar-track {
+            background: #fdf5e6;
+            border-radius: 10px;
+        }
+        .story-output-scrollable::-webkit-scrollbar-thumb {
+            background: #ffb74d;
+            border-radius: 10px;
+        }
+        .story-output-scrollable::-webkit-scrollbar-thumb:hover {
+            background: #ffa726;
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+    <!-- Background Elements (Lucide Icon replacements via SVG) -->
+    <!-- Moon Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon-icon-style"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <!-- Star Twinkle elements -->
+    <div class="star-twinkle" style="top: 15%; left: 15%; animation-delay: 0s;"></div>
+    <div class="star-twinkle" style="top: 30%; right: 20%; animation-delay: 0.5s; width: 3px; height: 3px;"></div>
+    <div class="star-twinkle" style="bottom: 10%; left: 40%; animation-delay: 1s;"></div>
+    <div class="star-twinkle" style="top: 25%; left: 70%; animation-delay: 1.5s; width: 6px; height: 6px;"></div>
+    <div class="star-twinkle" style="bottom: 5%; right: 15%; animation-delay: 2s;"></div>
+    <div class="star-twinkle" style="top: 40%; left: 50%; animation-delay: 2.5s;"></div>
+    <div class="star-twinkle" style="top: 70%; right: 30%; animation-delay: 3s; width: 4px; height: 4px;"></div>
+
+
+    <!-- Main Content Container -->
+    <div class="min-h-screen p-4 sm:p-8 font-sans relative overflow-hidden">
+        <div class="relative z-10 bg-night-sky-gradient min-h-[95vh] rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] p-4 sm:p-10 border-8 border-white">
+
+            <header class="text-center mb-8">
+                <h1 class="text-5xl sm:text-6xl font-story font-extrabold text-yellow-300 drop-shadow-[4px_4px_0_rgba(0,0,0,0.4)] flex items-center justify-center">
+                    <!-- Star Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mr-3 text-yellow-300 animate-pulse"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    Story Dream Weaver
+                </h1>
+                <p class="text-gray-200 mt-2 text-xl font-body">Spinning Tales for Sleepy Heads</p>
+            </header>
+
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- --- Left Column: Inputs & Controls (The Wish Machine) --- -->
+                <div class="lg:col-span-1 space-y-4">
+                    <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-indigo-300 transform transition duration-300 hover:scale-[1.02]">
+                        <h2 class="text-2xl font-story font-bold text-indigo-700 mb-4 flex items-center border-b-2 pb-2 border-indigo-100">
+                            <!-- Globe Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 mr-2 text-blue-500"><circle cx="12" cy="12" r="10"/><path d="M12 2a25.15 25.15 0 0 0 0 20M2 12h20"/></svg>
+                            Story DNA & Magic Settings
+                        </h2>
+
+                        <!-- Inputs will be populated by JS function calls -->
+                        <div id="input-container" class="space-y-4">
+                            <!-- SelectInput components rendered here by JS -->
+                        </div>
+
+                        <!-- API Key Input -->
+                        <div class="mt-6 pt-4 border-t border-purple-100 font-body">
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">
+                                <!-- Zap Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-1 inline text-green-400"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                AI Model API Key (Optional)
+                            </label>
+                            <input
+                                type="text"
+                                id="api-key-input"
+                                placeholder="Paste your Gemini API Key here"
+                                class="w-full p-3 border-2 border-gray-300 rounded-xl shadow-inner focus:ring-green-500 focus:border-green-500 bg-gray-50 text-sm"
+                            />
+                            <p class="text-xs text-gray-500 mt-1 italic">
+                                Leave empty for hardcoded story/fast browser voice. Required for new stories and high-quality voices.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Specific Request / Open-ended Prompt (The Spark) -->
+                    <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-green-300 transform transition duration-300 hover:scale-[1.02]">
+                        <h2 class="text-2xl font-story font-bold text-green-600 mb-4 flex items-center border-b-2 pb-2 border-green-100">
+                            <!-- Sparkles Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 mr-2 text-yellow-500"><path d="M9.93 2.872a1 1 0 0 1 2.14 0l.493 1.054a1 1 0 0 0 .753.535l1.09.182a1 1 0 0 1 .535 1.753l-.867.781a1 1 0 0 0-.27.818l.215 1.076a1 1 0 0 1-1.464 1.065l-1.01-.5a1 1 0 0 0-.825 0l-1.01.5a1 1 0 0 1-1.464-1.065l.215-1.076a1 1 0 0 0-.27-.818l-.867-.781a1 1 0 0 1 .535-1.753l1.09-.182a1 1 0 0 0 .753-.535l.493-1.054Z"/><path d="M12.43 15.872a1 1 0 0 1 2.14 0l.493 1.054a1 1 0 0 0 .753.535l1.09.182a1 1 0 0 1 .535 1.753l-.867.781a1 1 0 0 0-.27.818l.215 1.076a1 1 0 0 1-1.464 1.065l-1.01-.5a1 1 0 0 0-.825 0l-1.01.5a1 1 0 0 1-1.464-1.065l.215-1.076a1 1 0 0 0-.27-.818l-.867-.781a1 1 0 0 1 .535-1.753l1.09-.182a1 1 0 0 0 .753-.535l.493-1.054Z"/></svg>
+                            Creative Spark
+                        </h2>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2 font-body">Specific request or plot twist:</label>
+                        <textarea
+                            id="specific-request-input"
+                            placeholder="E.g., 'Make the main character meet a talking hedgehog who loves to bake.' or 'The theme should be about the importance of being quiet.'"
+                            rows="4"
+                            class="w-full p-3 border-2 border-green-200 rounded-xl shadow-inner focus:ring-green-500 focus:border-green-500 bg-green-50 resize-none font-body"
+                        ></textarea>
+                    </div>
+
+                    <!-- Generate Button (The Magic Trigger) -->
+                    <button
+                        onclick="handleGenerateStory()"
+                        id="generate-story-button"
+                        class="w-full py-4 px-6 rounded-full text-white text-2xl font-story font-bold transition duration-300 flex items-center justify-center shadow-xl bg-purple-600 hover:bg-purple-700 transform hover:scale-[1.03] active:scale-[0.98] shadow-purple-500/50"
+                    >
+                        <!-- Content will be populated by JS to perfectly match the React state -->
+                    </button>
+                </div>
+
+
+                <!-- --- Right Column: Story Output (The Magic Book) --- -->
+                <div class="lg:col-span-2">
+                    <div id="story-book-container" class="bg-white p-6 sm:p-8 rounded-3xl shadow-2xl min-h-[600px] border-8 border-yellow-300 flex flex-col story-output-scrollable">
+                        
+                        <!-- Header/Controls -->
+                        <div id="story-header" class="flex justify-between items-center mb-4 pb-2 border-b-4 border-yellow-200">
+                            <h2 class="text-4xl font-story font-bold text-yellow-700 flex items-center drop-shadow-md">
+                                <!-- Moon Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 mr-3 text-indigo-500"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                                Your Enchanted Tale
+                            </h2>
+
+                            <!-- Read Aloud Button Container -->
+                            <div id="tts-button-container" class="hidden">
+                                <button
+                                    onclick="toggleReading()"
+                                    id="tts-button"
+                                    class="py-2 px-4 rounded-full text-white text-sm font-bold transition duration-200 flex items-center shadow-lg transform hover:scale-[1.05] active:scale-[0.98] bg-green-600 hover:bg-green-700"
+                                >
+                                    <!-- Volume2 Icon -->
+                                    <svg id="tts-icon-default" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2"><path d="M11 5L6 9H2V15H6L11 19V5Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.08"/></svg>
+                                    <!-- StopCircle Icon (used when reading) -->
+                                    <svg id="tts-icon-stop" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2 hidden"><circle cx="12" cy="12" r="10"/><path d="M9 9h6v6H9z"/></svg>
+                                    <!-- Loader2 Icon (used when loading) -->
+                                    <svg id="tts-icon-loader" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2 hidden animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                                    <span id="tts-button-text">Read Aloud</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error/Status Message Container -->
+                        <div id="message-container" class="hidden p-4 mb-4 rounded-lg font-body">
+                            <p id="message-text"></p>
+                        </div>
+
+                        <!-- Story Content / Empty / Loading States -->
+                        <div id="story-content-area" class="flex flex-col flex-grow">
+                            
+                            <!-- 1. Loading State -->
+                            <div id="loading-state" class="hidden flex flex-col items-center justify-center flex-grow text-center text-gray-500">
+                                <!-- Loader2 Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-purple-500 animate-spin mb-6"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                                <p class="text-2xl font-story">Crafting the perfect bedtime story... please wait for the magic to unfold!</p>
+                            </div>
+                            
+                            <!-- 2. Empty State -->
+                            <div id="empty-state" class="flex flex-col items-center justify-center flex-grow text-center text-gray-400 p-8">
+                                <!-- BookOpen Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-purple-300 mb-6"><path d="M2 13V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v7"/><path d="M2 17.5a2.5 2.5 0 0 1 2.5-2.5h15a2.5 2.5 0 0 1 2.5 2.5v0A2.5 2.5 0 0 1 19.5 20h-15A2.5 2.5 0 0 1 2 17.5Z"/></svg>
+                                <p class="text-2xl font-story text-purple-400 drop-shadow-sm">Choose your ingredients and conjure a tale!</p>
+                                <p class="text-lg font-body text-gray-500 mt-2">Use the settings on the left to dream up your adventure.</p>
+                            </div>
+
+                            <!-- 3. Story Display State -->
+                            <div id="story-display" class="hidden flex flex-col flex-grow story-output-scrollable">
+                                <div id="story-text-output" class="space-y-4 text-xl text-gray-800 font-body leading-relaxed whitespace-pre-wrap">
+                                    <!-- Populated by JS -->
+                                </div>
+                                <div class="mt-8 pt-4 border-t border-gray-200 text-center text-lg italic text-gray-500 flex items-center justify-center font-story">
+                                    <!-- Moon Icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-2 text-indigo-400"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                                    And so, the dream begins... sweet sleep.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC BLOCK -->
+    <script>
+        // --- Configuration ---
+        const DEFAULT_API_KEY = "";
+        const GENERATION_MODEL_NAME = 'gemini-2.5-flash-preview-09-2025';
+        const TTS_MODEL_NAME = 'gemini-2.5-flash-preview-tts';
+        const STANDARD_TTS_SAMPLE_RATE = 24000; 
+
+        // --- Data Definitions (From React useMemo/Constants) ---
+        const voiceOptions = [
+            { name: 'Zephyr (Bright)', voiceName: 'Zephyr' },
+            { name: 'Kore (Firm)', voiceName: 'Kore' },
+            { name: 'Puck (Upbeat)', voiceName: 'Puck' },
+            { name: 'Charon (Informative)', voiceName: 'Charon' },
+        ];
+        const ageOptions = ['2-3 (Simple vocabulary)', '3-5 (Rhythm and rhyme)', '6-8 (Adventure and problem-solving)', '9-12 (Complex plots and mild conflict)'];
+        const themeOptions = ['Fantasy (Magic and mythical creatures)', 'Space (Planets and rockets)', 'Animal Friends (Talking animals)', 'Everyday Life (Family and school)', 'Ocean Adventure (Mermaids and fish)'];
+        const moodOptions = ['Curious', 'Brave', 'Silly', 'Sleepy', 'Kind', 'Worried (needs resolution)'];
+        const settingOptions = ['Enchanted Forest', 'Deep Space', 'Cozy Bedroom', 'Busy City', 'Underwater Castle'];
+        const lengthOptions = [
+            { label: '1 Minute (Fast TTS)', time: '0-1', words: '50-150' }, 
+            { label: '1 - 5 Minutes', time: '1-5', words: '150-600' },
+            { label: '5 - 10 Minutes', time: '5-10', words: '600-1200' },
+            { label: '10 - 25 Minutes', time: '10-25', words: '1200-2500' },
+        ];
+        const FALLBACK_STORIES = [
+            { content: `Once upon a time, in a sunny little garden, lived a tiny ladybug named Leo. Leo had a very important job: keeping his spots shiny! But one morning, Leo noticed one spot was dull. "Oh no!" he whispered. He asked the busy caterpillar, "How do I make my spot shine?" The caterpillar said, "Eat a crunchy green leaf!" Leo ate a crunchy green leaf, but the spot stayed dull. He asked the friendly bee, "How do I make my spot shine?" The bee said, "Buzz a happy tune!" Leo buzzed a happy tune, but the spot stayed dull. Sad little Leo flew to the biggest sunflower. He saw a small spider with a wobbly leg. Leo didn't worry about his spot; he gently helped the spider steady its leg. The spider waved happily. Suddenly, the sunlight caught Leo's spot, and it sparkled brighter than ever! Leo realized that doing a good deed was the best way to shine, inside and out. Feeling warm and sleepy from his day of kindness, Leo tucked himself under a soft petal. His spots glowed with the light of a good heart. Sweet dreams, tiny Leo.` },
+            { content: `A small, brave astronaut named Elara lived on a research station orbiting Mars. Her mission was to collect Moon Rock Fluff from the silent, dusty side of the planet's moon, Phobos. Elara piloted her little rocket, 'The Star-Snooper,' towards the oddly potato-shaped moon. Suddenly, a warning light flashed: The gravity-grippers were jammed by space dust! Without them, she couldn't safely land. "Think, Elara, think," she murmured. She remembered her old Earth lessons about static electricity. She carefully maneuvered The Star-Snooper into a long, slow spin, rubbing its hull against a faint cloud of magnetic solar particles. *ZZZZZT!* When she stopped spinning, she activated the grippers. The static charge had instantly repelled the clinging dust! She landed smoothly, collected the soft Moon Rock Fluff, and zipped back to her station, a problem-solver and a hero. Back in her bunk, with the red glow of Mars filling her viewport, Elara drifted off, dreaming of the silent, clever stars.` },
+        ];
+        const systemPrompt = "You are a professional children's bedtime story writer specializing in whimsical, cute, and extremely simple narratives. Your goal is to write a short, captivating, and morally positive story. The language must be simple, gentle, and often rhythmic or repetitive to be comforting. Focus on friendly characters and gentle, imaginative actions. Avoid complex vocabulary or intense conflict. The story must be appropriate for the specified age range and have a clear beginning, middle, and end. DO NOT include any introductory or concluding phrases, just the story content itself.";
+
+        // --- State Variables (Replacing React useState) ---
+        let apiKey = DEFAULT_API_KEY;
+        let ageRange = ageOptions[1]; // 3-5 (Rhythm and rhyme)
+        let theme = themeOptions[0]; // Fantasy
+        let characterMood = moodOptions[0]; // Curious
+        let setting = settingOptions[0]; // Enchanted Forest
+        let storyLength = lengthOptions[0].time; // 1 Minute (Fast TTS) - NEW DEFAULT
+        let selectedVoice = voiceOptions[0].voiceName; // Zephyr
+        let specificRequest = '';
+
+        let story = '';
+        let isStoryLoading = false;
+        let isAudioLoading = false;
+        let isReading = false;
+        let error = '';
+        let statusMessage = '';
+        
+        // Audio control variables
+        let audioPlayer = null; 
+        let browserSpeaker = null;
+        let browserSpeakerVoice = null; 
+
+        // --- DOM Elements ---
+        const el = (id) => document.getElementById(id);
+        const storyTextOutputEl = el('story-text-output');
+        const emptyStateEl = el('empty-state');
+        const loadingStateEl = el('loading-state');
+        const storyDisplayEl = el('story-display');
+        const generateButtonEl = el('generate-story-button');
+        const ttsButtonContainerEl = el('tts-button-container');
+        const ttsButtonEl = el('tts-button');
+        const ttsButtonTextEl = el('tts-button-text');
+        const msgContainerEl = el('message-container');
+        const msgTextEl = el('message-text');
+        const apiKeyInputEl = el('api-key-input');
+        const specificRequestInputEl = el('specific-request-input');
+
+        // --- Icon SVGs for Dynamic Button Content ---
+        const SPARKLES_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-3"><path d="M9.93 2.872a1 1 0 0 1 2.14 0l.493 1.054a1 1 0 0 0 .753.535l1.09.182a1 1 0 0 1 .535 1.753l-.867.781a1 1 0 0 0-.27.818l.215 1.076a1 1 0 0 1-1.464 1.065l-1.01-.5a1 1 0 0 0-.825 0l-1.01.5a1 1 0 0 1-1.464-1.065l.215-1.076a1 1 0 0 0-.27-.818l-.867-.781a1 1 0 0 1 .535-1.753l1.09-.182a1 1 0 0 0 .753-.535l.493-1.054Z"/><path d="M12.43 15.872a1 1 0 0 1 2.14 0l.493 1.054a1 1 0 0 0 .753.535l1.09.182a1 1 0 0 1 .535 1.753l-.867.781a1 1 0 0 0-.27.818l.215 1.076a1 1 0 0 1-1.464 1.065l-1.01-.5a1 1 0 0 0-.825 0l-1.01.5a1 1 0 0 1-1.464-1.065l.215-1.076a1 1 0 0 0-.27-.818l-.867-.781a1 1 0 0 1 .535-1.753l1.09-.182a1 1 0 0 0 .753-.535l.493-1.054Z"/></svg>`;
+        const LOADER_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-3 animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`;
+
+
+        // --- Utility Functions (Copied from React component) ---
+
+        const base64ToArrayBuffer = (base64) => {
+            const binaryString = atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        };
+
+        const writeString = (view, offset, string) => {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        };
+
+        const pcmToWav = (pcmData, sampleRate) => {
+            const numChannels = 1;
+            const bytesPerSample = 2; // 16-bit PCM
+            const buffer = new ArrayBuffer(44 + pcmData.length * bytesPerSample);
+            const view = new DataView(buffer);
+
+            let offset = 0;
+
+            // RIFF chunk
+            writeString(view, offset, 'RIFF'); offset += 4;
+            view.setUint32(offset, 36 + pcmData.length * bytesPerSample, true); offset += 4;
+            writeString(view, offset, 'WAVE'); offset += 4;
+
+            // fmt chunk
+            writeString(view, offset, 'fmt '); offset += 4;
+            view.setUint32(offset, 16, true); offset += 4; // Sub-chunk size: 16
+            view.setUint16(offset, 1, true); offset += 2; // Audio format: 1 (Linear PCM)
+            view.setUint16(offset, numChannels, true); offset += 2; // Number of channels
+            view.setUint32(offset, sampleRate, true); offset += 4; // Sample rate
+            view.setUint32(offset, sampleRate * numChannels * bytesPerSample, true); offset += 4; // Byte rate
+            view.setUint16(offset, numChannels * bytesPerSample, true); offset += 2; // Block align
+            view.setUint16(offset, bytesPerSample * 8, true); offset += 2; // Bits per sample
+
+            // data chunk
+            writeString(view, offset, 'data'); offset += 4;
+            view.setUint32(offset, pcmData.length * bytesPerSample, true); offset += 4;
+
+            // Write PCM data
+            for (let i = 0; i < pcmData.length; i++, offset += bytesPerSample) {
+                view.setInt16(offset, pcmData[i], true);
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        };
+
+        const fetchWithRetry = async (url, options, maxRetries = 5) => {
+            let lastError = null;
+            for (let i = 0; i < maxRetries; i++) {
+                const delay = Math.pow(2, i) * 1000;
+                try {
+                    const response = await fetch(url, options);
+                    
+                    if (!response.ok) {
+                        let errorDetails = 'Could not parse error details.';
+                        try {
+                            const errorBody = await response.json();
+                            errorDetails = errorBody.error?.message || JSON.stringify(errorBody);
+                        } catch {}
+
+                        const truncatedDetails = errorDetails.substring(0, 150) + (errorDetails.length > 150 ? '...' : '');
+                        throw new Error(`API call failed with status ${response.status}: ${truncatedDetails}`);
+                    }
+                    return response;
+                } catch (err) {
+                    lastError = err;
+                    console.error(`Attempt ${i + 1} failed. Retrying in ${delay / 1000}s...`, err);
+                    if (i < maxRetries - 1) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    }
+                }
+            }
+            throw new Error(`Failed to fetch after ${maxRetries} attempts: ${lastError.message}`);
+        };
+
+
+        // --- UI Update Function (Replacing React Render) ---
+        function updateUI() {
+            // 1. Error/Status Message
+            msgContainerEl.classList.add('hidden');
+            if (error || statusMessage) {
+                msgContainerEl.classList.remove('hidden');
+                msgTextEl.innerText = error ? `Oops! Error: ${error}` : statusMessage;
+                msgContainerEl.className = `p-4 mb-4 rounded-lg font-body ${error ? 'bg-red-100 text-red-700 border border-red-300' : 'bg-blue-50 text-blue-700 border border-blue-200'}`;
+            }
+
+            // 2. Main Content State
+            emptyStateEl.classList.add('hidden');
+            loadingStateEl.classList.add('hidden');
+            storyDisplayEl.classList.add('hidden');
+            ttsButtonContainerEl.classList.add('hidden');
+
+            if (isStoryLoading) {
+                loadingStateEl.classList.remove('hidden');
+            } else if (story) {
+                storyDisplayEl.classList.remove('hidden');
+                ttsButtonContainerEl.classList.remove('hidden');
+                storyTextOutputEl.innerHTML = story.split('\n\n').map(p => `<p class="mb-4">${p}</p>`).join('');
+            } else {
+                emptyStateEl.classList.remove('hidden');
+            }
+
+            // 3. Generate Button State (FIXED LOGIC)
+            generateButtonEl.disabled = isStoryLoading || isAudioLoading;
+            generateButtonEl.className = `w-full py-4 px-6 rounded-full text-white text-2xl font-story font-bold transition duration-300 flex items-center justify-center shadow-xl ${
+                generateButtonEl.disabled 
+                    ? 'bg-purple-400 cursor-not-allowed' 
+                    : 'bg-purple-600 hover:bg-purple-700 transform hover:scale-[1.03] active:scale-[0.98] shadow-purple-500/50'
+            }`;
+            
+            // Set Inner HTML dynamically based on state
+            generateButtonEl.innerHTML = isStoryLoading
+                ? `${LOADER_ICON}Weaving a Dream...`
+                : `${SPARKLES_ICON}Unleash the Story!`;
+
+            // 4. TTS Button State
+            const ttsIconDefault = el('tts-icon-default');
+            const ttsIconStop = el('tts-icon-stop');
+            const ttsIconLoader = el('tts-icon-loader');
+            
+            ttsIconDefault.classList.add('hidden');
+            ttsIconStop.classList.add('hidden');
+            ttsIconLoader.classList.add('hidden');
+
+            ttsButtonEl.className = `py-2 px-4 rounded-full text-white text-sm font-bold transition duration-200 flex items-center shadow-lg transform hover:scale-[1.05] active:scale-[0.98]`;
+            
+            if (isReading) {
+                ttsIconStop.classList.remove('hidden');
+                ttsButtonEl.classList.add('bg-red-500', 'hover:bg-red-600');
+                ttsButtonTextEl.innerText = 'Stop Reading';
+            } else if (isAudioLoading) {
+                ttsIconLoader.classList.remove('hidden');
+                ttsButtonEl.classList.add('bg-amber-500', 'cursor-wait');
+                ttsButtonTextEl.innerText = 'Getting Audio...';
+            } else {
+                ttsIconDefault.classList.remove('hidden');
+                ttsButtonEl.classList.add('bg-green-600', 'hover:bg-green-700');
+                ttsButtonTextEl.innerText = 'Read Aloud';
+            }
+
+            // 5. Input Disabling
+            const inputs = document.querySelectorAll('#input-container select, #input-container input, #specific-request-input, #api-key-input');
+            const isInputDisabled = isStoryLoading || isAudioLoading;
+            inputs.forEach(input => input.disabled = isInputDisabled);
+        }
+
+        // --- Core Application Logic ---
+
+        function stopReading() {
+            // Stop Gemini TTS playback
+            if (audioPlayer) {
+                audioPlayer.pause();
+                audioPlayer.removeAttribute('src');
+                if (audioPlayer.src) { URL.revokeObjectURL(audioPlayer.src); }
+                audioPlayer = null;
+            }
+            // Stop Browser TTS playback
+            if (browserSpeaker && browserSpeaker.speaking) {
+                browserSpeaker.cancel();
+            }
+            isReading = false;
+            isAudioLoading = false;
+            statusMessage = '';
+            updateUI();
+        }
+
+        function speakBrowserTTS(text) {
+            if (!browserSpeaker || !browserSpeakerVoice) {
+                error = 'Browser Speech Synthesis is not available or voices failed to load.';
+                isReading = false;
+                updateUI();
+                return;
+            }
+
+            stopReading();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.voice = browserSpeakerVoice;
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+
+            utterance.onstart = () => {
+                isReading = true;
+                isAudioLoading = false; 
+                error = '';
+                statusMessage = `Reading with fast browser voice: ${browserSpeakerVoice.name}`;
+                updateUI();
+            };
+            
+            utterance.onend = () => {
+                isReading = false;
+                statusMessage = 'Read Aloud finished.';
+                updateUI();
+            };
+
+            utterance.onerror = (event) => {
+                error = `Browser TTS Error: ${event.error}. Try inputting a key for high-quality voice.`;
+                isReading = false;
+                statusMessage = '';
+                updateUI();
+            };
+
+            browserSpeaker.speak(utterance);
+        }
+
+        async function handleGenerateStory() {
+            if (isStoryLoading || isAudioLoading) return;
+
+            stopReading();
+            isStoryLoading = true; 
+            story = '';
+            error = '';
+            statusMessage = '';
+            updateUI();
+
+            // Read latest values from the DOM
+            apiKey = apiKeyInputEl.value.trim() || DEFAULT_API_KEY;
+            specificRequest = specificRequestInputEl.value;
+            // Select values are already updated via the SelectInput logic (see bindSelectInputs)
+            
+            const effectiveApiKey = apiKey;
+            const selectedLength = lengthOptions.find(opt => opt.time === storyLength);
+            const wordCountRange = selectedLength ? selectedLength.words : '50-150';
+            const lengthLabel = selectedLength ? selectedLength.label : '1 Minute (Fast TTS)';
+
+
+            // --- FALLBACK LOGIC ---
+            if (!effectiveApiKey) {
+                const randomIndex = Math.floor(Math.random() * FALLBACK_STORIES.length);
+                story = FALLBACK_STORIES[randomIndex].content;
+                statusMessage = 'No API key detected. Displaying a hardcoded story for demo purposes.';
+                isStoryLoading = false;
+                updateUI();
+                return;
+            }
+            // --- END FALLBACK LOGIC ---
+            
+            const userQuery = `
+                Please write a bedtime story based on the following criteria:
+                1. Age Range & Vocabulary: ${ageRange}
+                2. Main Theme: ${theme}
+                3. Main Character's Mood: Starts as ${characterMood}
+                4. Primary Setting: ${setting}
+                5. Specific User Request/Plot Point (Creative Spark): ${specificRequest || 'None.'}
+
+                The story MUST be approximately ${wordCountRange} words long to match the reading time of ${lengthLabel}.
+                The story must gently resolve any negative mood (if applicable) and conclude on a peaceful, sleepy note, emphasizing **cuddle-worthy cuteness and soft imagination**.
+            `;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GENERATION_MODEL_NAME}:generateContent?key=${effectiveApiKey}`;
+
+            try {
+                const response = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    story = text;
+                    statusMessage = 'New story generated successfully using Gemini AI!';
+                } else {
+                    error = 'The AI could not generate a story. Please try adjusting the parameters.';
+                    console.error('API Response was missing text:', result);
+                }
+
+            } catch (err) {
+                error = `Story generation failed: ${err.message}. Please check your API key.`;
+                console.error(err);
+            } finally {
+                isStoryLoading = false;
+                updateUI();
+            }
+        }
+
+        async function readStoryAloud() {
+            if (!story) {
+                error = 'Please generate a story first before reading aloud!';
+                updateUI();
+                return;
+            }
+            
+            apiKey = apiKeyInputEl.value.trim() || DEFAULT_API_KEY;
+            const effectiveApiKey = apiKey;
+
+            // --- FALLBACK/FAST TTS: Use Browser TTS if no API key is set ---
+            if (!effectiveApiKey) {
+                speakBrowserTTS(story);
+                return;
+            }
+            // --- END FALLBACK/FAST TTS ---
+
+            // --- Gemini TTS Logic ---
+            isAudioLoading = true; 
+            error = '';
+            statusMessage = `Requesting high-quality audio from Gemini TTS...`;
+            updateUI();
+
+            const payload = {
+                contents: [{ parts: [{ text: story }] }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: selectedVoice }
+                        }
+                    }
+                },
+            };
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${TTS_MODEL_NAME}:generateContent?key=${effectiveApiKey}`;
+
+            try {
+                const response = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                const result = await response.json();
+                const part = result.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/L16")) {
+                    const sampleRate = STANDARD_TTS_SAMPLE_RATE; 
+                    const pcmDataBuffer = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmDataBuffer);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+
+                    const audio = new Audio(audioUrl);
+                    
+                    isReading = true; // Set state to 'Stop Reading'
+                    isAudioLoading = false; // Clear 'Getting Audio...' spinner
+                    audioPlayer = audio;
+                    
+                    audio.play();
+
+                    audio.onended = () => stopReading();
+                    audio.onerror = (e) => {
+                        error = 'Error playing audio. Trying browser voice as fallback.';
+                        console.error('Audio playback error:', e);
+                        speakBrowserTTS(story); // Fallback to browser voice on playback error
+                    };
+                    statusMessage = `Playing high-quality audio with voice: ${selectedVoice}`;
+
+                } else {
+                    isAudioLoading = false;
+                    error = 'Audio generation failed. Falling back to browser voice.';
+                    speakBrowserTTS(story); 
+                }
+
+            } catch (err) {
+                error = `High-quality audio request failed: ${err.message}. Falling back to browser voice.`;
+                console.error(err);
+                speakBrowserTTS(story);
+            } finally {
+                isAudioLoading = false;
+                updateUI();
+            }
+        }
+
+        function toggleReading() {
+            if (isReading) {
+                stopReading();
+            } else {
+                readStoryAloud();
+            }
+        }
+
+
+        // --- Initialization and Input Binding ---
+
+        // Function to create and bind a select input component
+        function createSelectInput(id, label, options, initialValue, iconHtml, stateSetter) {
+            const container = document.createElement('div');
+            container.className = 'mt-4 font-body';
+            
+            // Icon check is simpler in JS but we need to check if API key is set for voice
+            const isVoiceSelector = id === 'voice-select';
+            const isVoiceDisabled = isVoiceSelector && (apiKeyInputEl.value.trim() === '' && DEFAULT_API_KEY === '');
+            const iconColorClass = isVoiceDisabled ? 'text-gray-400' : 'text-pink-400';
+            
+            const labelEl = document.createElement('label');
+            labelEl.className = 'block text-sm font-semibold text-gray-700 mb-1 flex items-center';
+            labelEl.innerHTML = `<span class="w-4 h-4 mr-1 ${iconColorClass}">${iconHtml}</span> ${label}`;
+
+            const selectEl = document.createElement('select');
+            selectEl.id = id;
+            selectEl.className = `w-full p-3 border-2 ${isVoiceDisabled ? 'border-gray-200 bg-gray-100 text-gray-500 cursor-not-allowed' : 'border-pink-200 bg-pink-50 text-gray-800'} rounded-xl shadow-inner focus:ring-purple-400 focus:border-purple-400 transition duration-150`;
+            selectEl.disabled = isVoiceDisabled;
+            
+            if (isVoiceSelector) {
+                const info = document.createElement('p');
+                info.className = 'text-xs text-gray-500 mb-2 italic';
+                info.innerText = 'This selector is only used when an API key is provided. Otherwise, a fast browser voice is used.';
+                container.appendChild(info);
+            }
+
+            options.forEach(opt => {
+                const optionEl = document.createElement('option');
+                const value = typeof opt === 'string' ? opt : opt.time || opt.voiceName;
+                const text = typeof opt === 'string' ? opt : opt.label || opt.name;
+                optionEl.value = value;
+                optionEl.innerText = text;
+                selectEl.appendChild(optionEl);
+            });
+
+            selectEl.value = initialValue;
+
+            selectEl.addEventListener('change', (e) => {
+                stateSetter(e.target.value);
+                // Re-render UI to update dependencies (like disabling voice selector)
+                if (isVoiceSelector) updateUI();
+            });
+
+            container.appendChild(labelEl);
+            container.appendChild(selectEl);
+            return container;
+        }
+
+        // --- Icon SVGs (Lucide replacements) ---
+        const icons = {
+            BookOpen: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v7"/><path d="M2 17.5a2.5 2.5 0 0 1 2.5-2.5h15a2.5 2.5 0 0 1 2.5 2.5v0A2.5 2.5 0 0 1 19.5 20h-15A2.5 2.5 0 0 1 2 17.5Z"/></svg>`,
+            Cloud: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H17a5 5 5 0 0 0 0-10C17.5 7 19 4 22 4c0 0 0 0 0 0A4.5 4.5 0 0 0 18 10h-1"/><path d="M15 19H8a4 4 0 1 1 0-8h2.5"/><path d="M18 10a4 4 0 0 1 0-8h1a4 4 0 0 1 4 4z"/></svg>`,
+            Castle: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6V3a1 1 0 0 1 2 0v3"/><path d="M12 22v-3"/><path d="M15 19h4a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-3v-3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h4"/></svg>`,
+            Droplet: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66c4.66 4.67-4.66 14.01-10.32 8.34S7.34 7.34 12 2.69z"/></svg>`,
+            Sun: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>`,
+            Volume2: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2V15H6L11 19V5Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.08"/></svg>`,
+            Headset: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h10"/><path d="M12 5V2a10 10 0 0 0-10 10v0a10 10 0 0 0 10 10v-3"/><path d="M8 10V7h2M8 14v3h2"/></svg>`
+        };
+        
+        function bindSelectInputs() {
+            const container = el('input-container');
+            container.innerHTML = ''; // Clear existing inputs
+
+            container.appendChild(createSelectInput('age-select', 'Age Range', ageOptions, ageRange, icons.BookOpen, (v) => ageRange = v));
+            container.appendChild(createSelectInput('length-select', 'Story Length (Approx. Read Time)', lengthOptions, storyLength, icons.Cloud, (v) => storyLength = v));
+            container.appendChild(createSelectInput('theme-select', 'Main Theme', themeOptions, theme, icons.Castle, (v) => theme = v));
+            container.appendChild(createSelectInput('mood-select', 'Character\'s Mood', moodOptions, characterMood, icons.Droplet, (v) => characterMood = v));
+            container.appendChild(createSelectInput('setting-select', 'Setting', settingOptions, setting, icons.Sun, (v) => setting = v));
+            
+            // Voice selector is a separate block with a divider in React, replicating structure
+            const voiceDiv = document.createElement('div');
+            voiceDiv.className = 'mt-6 pt-4 border-t border-purple-100';
+            voiceDiv.appendChild(createSelectInput('voice-select', 'Gemini Voice', voiceOptions, selectedVoice, icons.Volume2, (v) => selectedVoice = v));
+            container.appendChild(voiceDiv);
+        }
+
+        // --- Initial Load ---
+        window.onload = function() {
+            // 1. Initial Auth/Browser Speaker setup (mirrors useEffect in React)
+            const synth = window.speechSynthesis;
+            if (synth) {
+                const setVoices = () => {
+                    const availableVoices = synth.getVoices();
+                    const enVoice = availableVoices.find(voice => voice.lang.startsWith('en')) || availableVoices[0];
+                    browserSpeakerVoice = enVoice;
+                };
+                
+                if (synth.onvoiceschanged !== undefined) {
+                    synth.onvoiceschanged = setVoices;
+                }
+                setVoices();
+                browserSpeaker = synth;
+            }
+
+            // 2. Bind API Key and Specific Request inputs
+            apiKeyInputEl.addEventListener('input', (e) => {
+                apiKey = e.target.value;
+                bindSelectInputs(); // Re-bind to update the disabled state of the voice selector
+            });
+            specificRequestInputEl.addEventListener('input', (e) => {
+                specificRequest = e.target.value;
+            });
+
+            // 3. Initial input rendering
+            bindSelectInputs();
+            
+            // 4. Initial UI update
+            updateUI();
+        };
+
+        // Clean up on component close (best effort for plain JS)
+        window.onbeforeunload = function() {
+            if (browserSpeaker && browserSpeaker.speaking) {
+                browserSpeaker.cancel();
+            }
+        };
+
+    </script>
+</body>
+</html>
